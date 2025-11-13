@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เปรียบเทียบแพ็คเกจบริการ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .packages-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .package {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .package:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .package::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        
+        .package.recommended {
+            border: 3px solid #667eea;
+        }
+        
+        .package.recommended::before {
+            height: 12px;
+            background: linear-gradient(90deg, #f093fb, #f5576c);
+        }
+        
+        .recommended-badge {
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 8px 50px;
+            transform: rotate(45deg);
+            font-weight: bold;
+            font-size: 0.85em;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .package-name {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .package-subtitle {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 25px;
+            min-height: 40px;
+        }
+        
+        .price {
+            font-size: 2.5em;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .price-period {
+            color: #999;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        
+        .promotion {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: bold;
+            color: #d63031;
+            box-shadow: 0 4px 10px rgba(253,203,110,0.3);
+        }
+        
+        .features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            color: #555;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .features li:last-child {
+            border-bottom: none;
+        }
+        
+        .features li::before {
+            content: '✓';
+            color: #00b894;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .features li.optional {
+            color: #999;
+        }
+        
+        .features li.optional::before {
+            content: '◯';
+            color: #b2bec3;
+        }
+        
+        .feature-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .feature-detail {
+            font-size: 0.9em;
+            color: #666;
+            margin-left: 20px;
+        }
+        
+        .team-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .team-title {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .note {
+            background: white;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .note-title {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .note-content {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .packages-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .package-name {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 เปรียบเทียบแพ็คเกจบริการ</h1>
+        
+        <div class="packages-container">
+            <!-- Package 1: 4 in 1 -->
+            <div class="package recommended">
+                <div class="recommended-badge">แนะนำ</div>
+                <div class="package-name">🌟 4 IN 1</div>
+                <div class="package-subtitle">แพ็คเกจครบวงจร ทีมงานเต็มรูปแบบ</div>
+                <div class="price">35,000 ฿</div>
+                <div class="price-period">ต่อเดือน</div>
+                
+                <div class="promotion">
+                    🎁 ต่อสัญญาลด 10% + แถม 1 Option
+                </div>
+                
+                <ul class="features">
+                    <li>
+                        <div>
+                            <div class="feature-title">ศึกษาและวิเคราะห์คู่แข่ง</div>
+                            <div class="feature-detail">วิเคราะห์เชิงลึกเพื่อกลยุทธ์ที่แม่นยำ</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="feature-title">ทีมงาน 4 ตำแหน่ง (เต็มรูปแบบ)</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="feature-title">Admin - ตอบแชท</div>
+                            <div class="feature-detail">ทุกวัน 10:00-18:00 น.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="feature-title">Content Creator - วิดีโอ</div>
+                            <div class="feature-detail">สร้างสรรค์คอนเทนต์วิดีโอคุณภาพ</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="feature-title">Graphic Designer - Banner ภาพ</div>
+                            <div class="feature-detail">ออกแบบกราฟิกสวยงามน่าสนใจ</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="feature-title">Account Executive - ประสานงาน</div>
+                            <div class="feature-detail">ดูแลและติดตามโครงการอย่างใกล้ชิด</div>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="team-section">
+                    <div class="team-title">👥 ทีมงานครบทั้ง 4 ตำแหน่ง</div>
+                    <div style="color: #555; font-size: 0.9em;">
+                        ✅ Admin | ✅ Content | ✅ Graphic | ✅ AE
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Package 2: จับคู่ -->
+            <div class="package">
+                <div class="package-name">💼 จับคู่</div>
+                <div class="package-subtitle">เลือกบริการได้ 2 ตำแหน่งตามต้องการ</div>
+                <div class="price">28,000 ฿</div>
+                <div class="price-period">ต่อเดือน</div>
+                
+                <div class="promotion">
+                    🎁 ต่อสัญญาลด 10% + ลดค่า Packshot 50%
+                </div>
+                
+                <ul class="features">
+                    <li>
+                        <div>
+                            <div class="feature-title">ศึกษาและวิเคราะห์คู่แข่ง</div>
+                            <div class="feature-detail">วิเคราะห์เบื้องต้น</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="feature-title">ทีมงาน 2 ตำแหน่ง</div>
+                            <div class="feature-detail">เลือกได้จาก 4 ตำแหน่ง</div>
+                        </div>
+                    </li>
+                    <li class="optional">
+                        <div>
+                            <div class="feature-title">Admin - ตอบแชท</div>
+                            <div class="feature-detail">ทุกวัน 10:00-18:00 น. (ถ้ามี)</div>
+                        </div>
+                    </li>
+                    <li class="optional">
+                        <div>
+                            <div class="feature-title">Content Creator - วิดีโอ</div>
+                            <div class="feature-detail">สร้างคอนเทนต์วิดีโอ (ถ้ามี)</div>
+                        </div>
+                    </li>
+                    <li class="optional">
+                        <div>
+                            <div class="feature-title">Graphic Designer - Banner ภาพ</div>
+                            <div class="feature-detail">ออกแบบกราฟิก (ถ้ามี)</div>
+                        </div>
+                    </li>
+                    <li class="optional">
+                        <div>
+                            <div class="feature-title">Account Executive - ประสานงาน</div>
+                            <div class="feature-detail">ประสานงาน (ถ้ามี)</div>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="team-section">
+                    <div class="team-title">👥 เลือกได้ 2 จาก 4 ตำแหน่ง</div>
+                    <div style="color: #555; font-size: 0.9em;">
+                        เลือก Admin | Content | Graphic | AE
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Package 3: แยกจ้าง -->
+            <div class="package">
+                <div class="package-name">🎯 แยกจ้าง</div>
+                <div class="package-subtitle">จ้างตามความต้องการเฉพาะทาง</div>
+                <div class="price">15,000 ฿</div>
+                <div class="price-period">ต่อเดือน</div>
+                
+                <div class="promotion">
+                    🎁 ต่อสัญญาลด 10%
+                </div>
+                
+                <ul class="features">
+                    <li>
+                        <div>
+                            <div class="feature-title">ศึกษาและวิเคราะห์คู่แข่ง</div>
+                            <div class="feature-detail">วิเคราะห์พื้นฐาน</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="feature-title">ทีมงาน 1 ตำแหน่ง</div>
+                            <div class="feature-detail">เลือกได้จาก 4 ตำแหน่ง</div>
+                        </div>
+                    </li>
+                    <li class="optional">
+                        <div>
+                            <div class="feature-title">Admin - ตอบแชท</div>
+                            <div class="feature-detail">ทุกวัน 10:00-18:00 น. (ถ้ามี)</div>
+                        </div>
+                    </li>
+                    <li class="optional">
+                        <div>
+                            <div class="feature-title">Content Creator - วิดีโอ</div>
+                            <div class="feature-detail">สร้างคอนเทนต์วิดีโอ (ถ้ามี)</div>
+                        </div>
+                    </li>
+                    <li class="optional">
+                        <div>
+                            <div class="feature-title">Graphic Designer - Banner ภาพ</div>
+                            <div class="feature-detail">ออกแบบกราฟิก (ถ้ามี)</div>
+                        </div>
+                    </li>
+                    <li class="optional">
+                        <div>
+                            <div class="feature-title">Account Executive - ประสานงาน</div>
+                            <div class="feature-detail">ประสานงาน (ถ้ามี)</div>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="team-section">
+                    <div class="team-title">👥 เลือกได้ 1 ตำแหน่ง</div>
+                    <div style="color: #555; font-size: 0.9em;">
+                        เลือก Admin หรือ Content หรือ Graphic หรือ AE
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="note">
+            <div class="note-title">📝 หมายเหตุ</div>
+            <div class="note-content">
+                <p><strong>✓</strong> = บริการที่รวมอยู่ในแพ็คเกจแน่นอน</p>
+                <p><strong>◯</strong> = บริการที่ได้รับขึ้นอยู่กับตำแหน่งที่เลือก</p>
+                <p style="margin-top: 10px;"><strong>สัญญา:</strong> ทุกแพ็คเกจได้รับส่วนลด 10% เมื่อต่อสัญญา</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
