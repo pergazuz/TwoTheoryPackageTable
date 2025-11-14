@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>เปรียบเทียบแพ็คเกจบริการ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Prompt:wght@400;600;700&family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,8 +15,8 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #4849E8;
             padding: 40px 20px;
             min-height: 100vh;
         }
@@ -66,25 +69,53 @@
         }
 
         .comparison-table thead th.recommended {
-            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+            background: linear-gradient(135deg, #DDF344 0%, #a0c030 100%);
             position: relative;
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(185, 212, 64, 0.6);
+            z-index: 10;
+            animation: pulse 2s ease-in-out infinite;
+            overflow: hidden;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 15px 40px rgba(185, 212, 64, 0.6);
+            }
+            50% {
+                box-shadow: 0 15px 50px rgba(185, 212, 64, 0.8);
+            }
         }
 
         .recommended-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.7em;
-            margin-top: 10px;
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+            color: white;
+            padding: 8px 50px;
+            transform: rotate(45deg);
+            font-weight: bold;
+            font-size: 0.85em;
+            box-shadow: 0 4px 10px rgba(229, 62, 62, 0.6);
+            border-top: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+            letter-spacing: 1px;
         }
 
         .package-subtitle {
             font-size: 0.7em;
             font-weight: normal;
-            opacity: 0.9;
+            opacity: 0.95;
             display: block;
-            margin-top: 5px;
+            margin-top: 8px;
+        }
+
+        .comparison-table tbody td:nth-child(2) {
+            background: linear-gradient(to right, rgba(185, 212, 64, 0.08), rgba(160, 192, 48, 0.08));
+            border-left: 3px solid #DDF344;
+            border-right: 3px solid #DDF344;
+            position: relative;
         }
 
         .comparison-table tbody tr {
@@ -153,7 +184,7 @@
         }
 
         .price-cell {
-            color: #667eea;
+            color: #DDF344;
             font-size: 2em;
             padding: 25px 20px;
         }
@@ -171,14 +202,14 @@
         }
 
         .promotion-cell {
-            color: #d63031;
+            color: #DDF344;
             font-weight: bold;
             font-size: 0.9em;
         }
 
         .note {
             background: white;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #DDF344;
             padding: 20px;
             border-radius: 10px;
             margin-top: 30px;
@@ -187,7 +218,7 @@
 
         .note-title {
             font-weight: bold;
-            color: #667eea;
+            color: #DDF344;
             margin-bottom: 10px;
             font-size: 1.2em;
         }
@@ -245,8 +276,8 @@
                     <tr>
                         <th>คุณสมบัติ</th>
                         <th class="recommended">
-                            4 IN 1
                             <span class="recommended-badge">แนะนำ</span>
+                            4 IN 1
                             <span class="package-subtitle">แพ็คเกจครบวงจร ทีมงานเต็มรูปแบบ</span>
                         </th>
                         <th>
